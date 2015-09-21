@@ -1,4 +1,4 @@
-import requests
+from selenium import webdriver
 import bs4
 import re
 import random
@@ -33,7 +33,14 @@ FANCY_CITIES = [
 BASE_URL = 'http://www.yelp.com'
 
 def parsed_response(url):
-  return bs4.BeautifulSoup(requests.get(url).text, "html.parser")
+  print('getting url {0}'.format(url))
+  driver = webdriver.PhantomJS()
+  driver.get(url)
+  content = driver.page_source
+  print('got content')
+  driver.quit()
+
+  return bs4.BeautifulSoup(content, "html.parser")
 
 def random_page_num(fancy_city):
   all_businesses_url = '{0}/search?find_desc=&find_loc={1}&ns=1#start=0&attrs=RestaurantsPriceRange2.4'.format(BASE_URL, fancy_city)
