@@ -70,7 +70,10 @@ def random_review(business_page, num_stars):
       total_text = ''
       random_starting_point = random.randint(0, len(sentences) - 1)
       for sentence in sentences[random_starting_point:(len(sentences) - 1)]:
-        total_text += sentence
+        if total_text != '':
+          total_text = total_text + ' ' + sentence
+        else:
+          total_text += sentence
         if len(total_text) >= 140:
           return total_text[0:139]
     else:
